@@ -7,6 +7,9 @@ let decodeFromBase64;
 if (isBase64Supported) {
     encodeToBase64 = data => Buffer.from(data).toString('base64');
     decodeFromBase64 = b64string => Buffer.from(b64string, 'base64').toString('ascii');
+else if (window && typeof window.btoa === 'function' && typeof window.atob === 'function') {
+    encodeToBase64 = data => window.btoa(data);
+    decodeFromBase64 = b64string => window.atob(b64string);
 } else {
     // @todo use import of ES6 instead of require of ES5
     // using require instead of promised based dynamic imports till https://esdiscuss.org/topic/dynamic-synchronous-import is finalised
